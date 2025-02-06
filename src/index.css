@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+font-custom{
+    font-family: "Roboto", serif;
+}
+@keyframes glowing {
+    0% {
+      box-shadow: 0 0 5px #00c8ff66;
+    }
+    50% {
+      box-shadow: 0 0 20px #00c8ff66;
+    }
+    100% {
+      box-shadow: 0 0 5px #00c8ff66;
+    }
+  }
+  
+  .button-glowing {
+    animation: glowing 2s infinite;
+    transition: transform 0.3s ease;
+  }
+  
+  .button-glowing:hover {
+    transform: scale(1.05);
+  }

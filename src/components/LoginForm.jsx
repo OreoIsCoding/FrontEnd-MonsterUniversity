@@ -1,89 +1,114 @@
 import React, { useState } from 'react';
-import axios from '../axios';
-import InputField from './Inputfield';
+import InputField from '../components/Inputfield';
 import schoolLogo from '../assets/Monsters-University-Logo.png';
+import MessagePrompt from './Message/MessagePrompt';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('/login', { email, password });
-            if (response.status === 200) {
-                // Handle successful login
-                console.log('Login successful:', response.data);
-            } else {
-                // Handle login error
-                setError(response.data.message || 'Login failed');
-            }
-        } catch (error) {
-            setError('An error occurred. Please try again.');
+        if (!email || !password) {
+            setMessageType('error');
+            setMessage('Email and password are required');
+            return;
+        }
+        
+        //Credentials
+        const Email = 'user@example.com';
+        const Password = 'password123';
+
+        if (email === Email && password === Password) {
+            console.log('Login successful');
+            setMessageType('success');
+            setMessage('Successfully logged in');
+
+            setTimeout(() => {
+                window.location.href = '/homepage';
+            }, 1000);
+    
+        } else {
+            setMessageType('error');
+            setMessage('Invalid credentials. Please try again.');
+            
+            setTimeout(() =>{
+                closeMessage();
+                },1500);
         }
     };
 
+    const closeMessage = () => {
+        setMessage('');
+        setMessageType('');
+    };
+
     return (
-            <div className="w-[450px] max-w-md p-6 sm:p-8 space-y-1 bg-white rounded-lg shadow-lg sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
-                <img src={schoolLogo} alt="Bulacan State University" className="w-20 h-20 mx-auto rounded-full " />
-                <h2 className="text-xl font-semibold text-center mb-1">Monster University</h2>
-                <h3 className="text-center text-md font-light tracking-wider mb-6">Please Login your Account</h3>
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                    {/* Email Input */}
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            Email
-                        </label>
-                        <InputField
-                            id="email"
-                            type="email"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
+        <div className=" relative w-full max-w-md p-4 sm:p-6 h-[560px] m-[20px] md:p-8 bg-white rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-105">
+                
+                 <div className="absolute top-1 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10">
+        <MessagePrompt message={message} type={messageType} onClose={closeMessage} />
+      </div>
+            <img
+                src={schoolLogo}
+                alt="Monsters University"
+                className="w-20 h-20 mx-auto mb-4 rounded-full shadow-md"
+            />
+            <h2 className="text-2xl font-semibold text-center text-gray-900 mb-2">Monster University</h2>
+            <h3 className="text-center text-lg font-light text-gray-600 mb-6">Please login to your account</h3>
 
-                    {/* Password Input */}
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Password
-                        </label>
-                        <InputField
-                            id="password"
-                            type="password"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    {/* No Account, Sign-up Link */}
-                    <div className="text-center">
-                        <span className="text-sm">Don't have an account?</span>
-                        <a href="/sign-up" className="ml-1 text-sm text-blue-500 hover:underline">
-                            Sign up
-                        </a>
-                    </div>
-
-                    {/* Login Button */}
-                    <div>
-                        <button
-                            type="submit"
-                            className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
-                        >
-                            Login
-                        </button>
-                    </div>
-                </form>
-
-                {/* Forgot Password */}
-                <div className="text-center">
-                    <a href="#" className="text-sm text-blue-500 hover:underline">
-                        Forgot password?
-                    </a>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                {/* Email Input */}
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-800">Email</label>
+                    <InputField
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                 </div>
-                {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+
+                {/* Password Input */}
+                <div>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-800">Password</label>
+                    <InputField
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+
+                {/* No Account, Sign-up Link */}
+                <div className="text-center text-sm">
+                    <span className="text-gray-600">Don't have an account? </span>
+                    <a href="/sign-up" className="text-blue-500 hover:underline">Sign up</a>
+                </div>
+
+                {/* Login Button */}
+                <div>
+                    <button
+                        type="submit"
+                        className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Login
+                    </button>
+                </div>
+            </form>
+            
+      
+
+        
+            {/* Forgot Password Link */}
+            <div className="text-center mt-4">
+                <a href="#" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
             </div>
+        </div>
     );
 };
 
