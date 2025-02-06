@@ -23,7 +23,7 @@ const NavBar = () => {
               alt="Monsters University"
               className="w-[6rem] h-[48px] shadow-lg rounded-full transform transition duration-500 hover:scale-105"
             />
-            <div className="text-white text-3xl font-semibold tracking-wide ">
+            <div className="text-white text-3xl sm:logo-text font-semibold tracking-wide ">
               <Link
                 to="/"
                 className="hover:text-gray-300 transition duration-300 ease-in-out transform hover:scale-105"

@@ -24,3 +24,40 @@ font-custom{
   .button-glowing:hover {
     transform: scale(1.05);
   }
+
+
+  @media (max-width: 468px) {
+    .hide-bg-image {
+      display: none;
+    }
+    .sm\:welcome-text {
+      font-size: 47px;
+    }
+    .sm\:logo-text{
+      font-size: 20px
+    }
+    .xs\:w-full {
+      width: 100% !important;
+    }
+    .xs\:flex-col {
+      display: flex;
+      flex-direction: column !important;
+    }
+    .xs\:gap-10 {
+      gap: 2.5rem !important;
+    }    
+  
+    }
+   
+    @media (max-width: 768px){
+      .md\:welcome-text{
+        font-size: 56px
+        
+      }
+      .hide-bg-image{
+        display: none;
+      }
+        
+      }
+  
+  
