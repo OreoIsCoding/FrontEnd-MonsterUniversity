@@ -7,8 +7,7 @@ const HomePage = () => {
     <div>
         <NavBar/>
 
-          <Dashboard/>
-
+          <Dashboard/> 
 
     </div>
   
